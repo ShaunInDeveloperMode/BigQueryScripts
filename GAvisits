@@ -1,0 +1,16 @@
+/*How many daily visits, hits, and page views.  Also what is the average amount of time spent on the site*/
+SELECT  
+  PARSE_DATE('%Y%m%d', date) AS dateFormatted,
+  sum(totals.visits) AS sumVisits,
+  sum(totals.hits) AS sumHits,
+  sum(totals.pageviews) AS sumPageviews,
+  avg(totals.timeOnSite) AS avgSiteTime
+
+
+FROM 
+  `bigquery-public-data.google_analytics_sample.ga_sessions_20170801` 
+
+GROUP BY
+  dateFormatted
+ORDER BY
+  dateFormatted
