@@ -1,0 +1,14 @@
+/* Page Hits by country and region*/
+SELECT
+  PARSE_DATE('%Y%m%d', date) AS dateFormatted,
+  geoNetwork.country,
+  count(geoNetwork.country) as countryCount,
+  geoNetwork.region,
+  count(geoNetwork.region) as regionCount
+FROM 
+  `bigquery-public-data.google_analytics_sample.ga_sessions_20170801`
+
+Group By 
+  dateFormatted, geoNetwork.country, geoNetwork.region
+ORDER BY 
+  countryCount DESC
