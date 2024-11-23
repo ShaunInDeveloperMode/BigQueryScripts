@@ -1,0 +1,19 @@
+/*Product Revenue Analysis, by Category and Product Name*/
+SELECT
+  product.v2ProductCategory AS productCategory,
+  product.v2ProductName AS productName,
+  COUNT(DISTINCT product.productSKU) AS totalProducts,
+  COUNT(product.productRevenue) AS productsWithRevenue,
+  AVG(product.productRevenue) AS avgRevenuePerProduct,
+  SUM(product.productRevenue) AS totalRevenue,
+  SUM(product.productQuantity) AS totalQuantity
+FROM
+  `bigquery-public-data.google_analytics_sample.ga_sessions_20170801`,
+  UNNEST(hits) AS hit,
+  UNNEST(hit.product) AS product
+WHERE
+  product.productRevenue > 0
+GROUP BY
+  product.v2ProductCategory, product.v2ProductName
+ORDER BY
+  product.v2ProductCategory, product.v2ProductName
