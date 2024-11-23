@@ -1,0 +1,13 @@
+/*NOAA Weather Data Analysis plot Avg Wind Speed and Avg Visibility*/
+SELECT 
+  year,
+  AVG(NULLIF(CAST(wdsp AS FLOAT64), 0)) AS avg_wind_speed,
+  AVG(NULLIF(visib, 0)) AS avg_visibility
+FROM 
+  `bigquery-public-data.noaa_gsod.gsod*`
+WHERE 
+  _TABLE_SUFFIX IN ('2019', '2020', '2021', '2022', '2023')
+GROUP BY 
+  year
+ORDER BY 
+  year;
