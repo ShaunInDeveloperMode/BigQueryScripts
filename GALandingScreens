@@ -1,0 +1,13 @@
+/* The most popular landing screens tracked by Google Analytics, Most Popular to Least Popular*/
+SELECT 
+  hit.appInfo.landingScreenName,
+  count(hit.appInfo.landingScreenName) AS screenHits
+FROM 
+  `bigquery-public-data.google_analytics_sample.ga_sessions_20170801`,
+  UNNEST(hits) AS hit
+
+GROUP BY
+  hit.appInfo.landingScreenName
+
+ORDER BY
+  screenHits DESC
