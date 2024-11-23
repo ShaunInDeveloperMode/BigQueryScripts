@@ -1,0 +1,10 @@
+/*American Community Survey (ACS) Data for Hudson County, NJ*/
+SELECT 
+  _TABLE_SUFFIX AS year,
+  *
+FROM 
+  `bigquery-public-data.census_bureau_acs.county_*` 
+WHERE
+  geo_id='34017'
+ORDER BY
+  year DESC
