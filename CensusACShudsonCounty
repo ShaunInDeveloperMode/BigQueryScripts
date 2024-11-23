@@ -1,10 +1,19 @@
 /*American Community Survey (ACS) Data for Hudson County, NJ*/
 SELECT 
-  _TABLE_SUFFIX AS year,
+  LEFT(_TABLE_SUFFIX, 4) AS year,
+  CASE 
+    WHEN _TABLE_SUFFIX LIKE '%1yr' THEN '1-Year Estimate'
+    WHEN _TABLE_SUFFIX LIKE '%3yr' THEN '3-Year Estimate'
+    WHEN _TABLE_SUFFIX LIKE '%5yr' THEN '5-Year Estimate'
+  END AS survey_period,
+  CASE 
+    WHEN LEFT(_TABLE_SUFFIX, 4) BETWEEN '2010' AND '2019' THEN '2010-2019'
+    WHEN LEFT(_TABLE_SUFFIX, 4) BETWEEN '2020' AND '2029' THEN '2020-2029'
+  END AS decade,
   *
 FROM 
   `bigquery-public-data.census_bureau_acs.county_*` 
 WHERE
   geo_id='34017'
 ORDER BY
-  year DESC
+  survey_period, year DESC
